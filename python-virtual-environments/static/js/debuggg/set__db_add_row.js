@@ -67,11 +67,11 @@ function update_db_row (product_data, table_index)
     }
     else if(!code.selectedIndex || code.selectedIndex >= 0)
     {
-        console.log("CODE IF 2");
+        //console.log("CODE IF 2");
     }
     else
     {
-        console.log("CODE IF 3");
+        //console.log("CODE IF 3");
         code.selectedIndex = 0;
     }
 
