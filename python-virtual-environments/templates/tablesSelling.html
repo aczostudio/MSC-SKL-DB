@@ -16,14 +16,20 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/static/css/sb-admin-2.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+  <!-- maxcdn bootstrap
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+
+  <style>
+    #customer-input label{
+      text-align: left;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -204,7 +210,68 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                    <!-- start modal body -->
+                      <!-- start modal body -->
+                      <!-- start input section 2 -->
+                      <div class="container mt-3">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <form id="customer-input" class="form-control" role="form">
+                              <label for="company-id">Company Id</label>
+                              <div class="col-sm-4">
+                                <input type="text" placeholder="" class="form-control" />
+                              </div>
+                              <label for="company-name">Company Name</label>
+                              <div class="col-sm-4">
+                                <input type="text" placeholder="" class="form-control" />
+                              </div>
+                            </form>
+                            </div>
+                        </div>
+                      </div>
+
+                      <!-- start input section 
+                        <form id=customer-input form="">
+                          <label for="demo">Company Id</label>
+                          <input type="text" class="form-control" placeholder="Company Id" id="company_id" name="Company_Id">
+                        </div>
+                        <form>
+                          <label for="demo">Company Name</label>
+                          <input type="text" class="form-control" placeholder="Company Name" id="company_name" name="Company_Name">
+                        </form>
+                        <form>
+                          <label for="demo">Company Address</label>
+                          <input type="text" class="form-control" placeholder="Company Address" id="company_add" name="Company_Add">
+                        </form>
+
+                      <div class="container-fluid">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                          <div class="col-lg-7 ">
+                            <div class="form-group row align-left">
+                              <div class="form-group col">
+                                <label>Company Id</label>
+                                <input id="tablehead_company_id" type="text" name='th_company_id' placeholder="Company's Id"
+                                  class="form-control" />
+                                <form>Company Name
+                                <input id="tablehead_company_name" type="text" name='th_company_name' placeholder="Company's name"
+                                  class="form-control" /></form>
+                                <form>Company Address
+                                <input id="tablehead_company_address" type="text" name='th_company_add' placeholder="Company's address"
+                                  class="form-control" /></form>
+                              </div>
+                              <div class="form-group col">
+                                <input id="tablehead_company_id" type="text" name='th_company_id' placeholder="Company's Id"
+                                  class="form-control" />
+                                <input id="tablehead_company_name" type="text" name='th_company_name' placeholder="Company's name"
+                                  class="form-control" />
+                                <input id="tablehead_company_address" type="text" name='th_company_add' placeholder="Company's address"
+                                  class="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      -->
+                      
+                    </div>
                       <div class="container">
                         <div class="row clearfix">
                           <div class="col-md-12 table-responsive">
@@ -384,16 +451,7 @@
                 }
 
                 var data = insert_data;
-                //this editor.getValue() gets the json string and it is working 
-                //as validated by an alert message
-
-                //var formInfo = document.forms['json_form'];
-                //var elements = document.forms[0].elements[i];
-                //formInfo.elements["json_data"].value = data;
-                //alert(data);
-
-                //document.getElementById("submit_form_input").name =  insert_data;
-                //console.log("JS INSERT DATA : ");
+                
                 console.log(document.getElementById("on_submit_co"));
                 submit_form = document.getElementById('on_submit_co');
                 submit_form.elements["savechange"].value = data;
