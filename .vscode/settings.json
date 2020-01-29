@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\pakka\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.pythonPath": "C:\\Users\\Nutz\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.pylintPath": "${workspaceFolder}/python-virtual-environments/env/Scripts/pylint.exe"
