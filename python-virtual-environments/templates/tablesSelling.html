@@ -99,11 +99,13 @@
           <span>Purchasing</span></a>
       </li>
 
+      <!--
       <li class="nav-item">
         <a class="nav-link" href="tablesAccountant.html">
           <i class="fas fa-fw fa-table"></i>
           <span>Accountant</span></a>
       </li>
+      -->
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -209,7 +211,7 @@
                           
                           <table class="table table-bordered table-hover table-sortable" id="tab_logic">
                             <thead>
-                              <tr >
+                              <tr>
                                 <th class="text-center " style="width:18%">
                                   Prodcut Code
                                 </th>
@@ -238,10 +240,10 @@
                                   <select id="sl_productcode" name="productcode0"> </select>
                                 </td>
                                 <td data-name="productdesc">
-                                    <textarea id="td_productdesc" style="resize:none" name="productdesc0" placeholder="Description" class="form-control" ></textarea>
+                                    <textarea id="td_productdesc" style="resize:none" name="productdesc0" placeholder="Description" class="form-control" disabled="true"></textarea>
                                 </td>
                                 <td data-name="price">
-                                    <textarea id="td_price" style="resize:none" name='price0' placeholder="Price" class="form-control"></textarea>
+                                    <textarea id="td_price" style="resize:none" name='price0' placeholder="Price" class="form-control" disabled="true"></textarea>
                                 </td>
                                 <td data-name="amount">
                                     <input id="td_amount" type="text" name='amount0' placeholder='0' class="form-control"/>
@@ -253,10 +255,10 @@
                                   </select>
                                 </td>
                                 <td data-name="totalprice">
-                                    <textarea id="td_totalprice" style="resize:none" name="totalprice0" placeholder="0.00" class="form-control"></textarea>
+                                    <textarea id="td_totalprice" style="resize:none" name="totalprice0" placeholder="0.00" class="form-control" disabled="true"></textarea>
                                 </td>
                                 <td data-name="del">
-                                    <button id="del_row" name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true">×</span></button>
+                                    <button id="del_row" style="resize:none" name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span aria-hidden="true">×</span></button>
                                 </td>
                                 <script>
                                   var get_db_product = JSON.parse('{{ t_product | tojson}}'); 
@@ -282,10 +284,42 @@
                                 </script>
                               </tr>
                             </tbody>
+                            
+                          </table>
+
+                          <table class="table table-bordered table-hover table-sortable" id="tab_summary">
+                            <tfoot class="grid-form">
+                              <tr>
+                                <th class="text-center " style="width:80%">
+                                  Price Total
+                                </th>
+                                <td data-name="pricetotal" style="width:20%">
+                                    <textarea id="td_pricetotal" style="resize:none" name="pricetotal0" placeholder="0.00" class="form-control" disabled="true"></textarea>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th class="text-center " style="width:80%">
+                                  Vat Total
+                                </th>
+                                <td data-name="vattotal" style="width:20%">
+                                    <textarea id="td_vattotal" style="resize:none" name="vattotal0" placeholder="0.00" class="form-control" disabled="true"></textarea>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th class="text-center " style="width:80%">
+                                  Net Total
+                                </th>
+                                <td data-name="nettotal" style="width:20%">
+                                    <textarea id="td_nettotal" style="resize:none" name="nettotal0" placeholder="0.00" class="form-control" disabled="true"></textarea>
+                                </td>
+                              </tr>
+                            </tfoot>
                           </table>
                         </div>
                       </div>
+                      
                       <a id="add_row" class="btn btn-primary float-right" >Add Row</a>
+                      
                       </div>
                     <!-- end of modal body -->
                     </div>
