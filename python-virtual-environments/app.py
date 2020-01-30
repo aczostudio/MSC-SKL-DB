@@ -60,7 +60,7 @@ def users():
 # app._static_folder = os.path.abspath("static")
 
 # mariarows = pythonMaria.pythonMaria_Select2("Employee_ID","Employee_FirstName","employee")
-product_t = pythonMaria.pythonMaria_SelectStar("product")
+
 # customer_t = pythonMaria.pythonMaria_SelectStar("customer")
 
 @app.route('/')
@@ -96,19 +96,63 @@ def tablesCustomer():
 def tablesProduct():
     return render_template('tablesProduct.html')
 
+product_t = pythonMaria.pythonMaria_SelectStar("product")
+cpo_t = pythonMaria.pythonMaria_SelectStar("customerproductorder")
+print('CPO : ' , cpo_t)
+
+pythonMaria.pythonMaria_closeConnect()
+
+def generate_cpo_id(quo_l_index, adding_index):
+    cpo_month = cpo_t[0][1].strftime("%Y%m")
+    cpo_month = cpo_month[2:]
+    #print("CPO MONTH : " , cpo_month)
+
+    cpo_id_num = int("".join(filter(str.isdigit, quo_l_index)))
+    
+    cpo_month += "{0:0=4d}".format(cpo_id_num)
+    cpo_return_id = ('quo' + str(cpo_month))
+    return cpo_return_id
+
+#cpo_id = generate_cpo_id(str(cpo_t[len(cpo_t)-1][0]))
+#print('CPO ID : ' , cpo_id)
+
+class CPO_ID_INDEX:
+    def __init__(self,lastIndex,cpoTable):
+        self.lastIndex = lastIndex
+        self.cpoTable = cpoTable
+        self.currentIndex = gerenerate_curretnIndex(lastIndex)
+    
+    def gerenerate_curretnIndex(lIndex):
+        cpo_month = self.cpoTable[0][1].strftime("%Y%m")
+        cpo_month = cpo_month[2:]
+        #print("CPO MONTH : " , cpo_month)
+
+        cpo_id_num = int("".join(filter(str.isdigit, lIndex)))
+        
+        cpo_month += "{0:0=4d}".format(cpo_id_num)
+        cpo_return_id = ('quo' + str(cpo_month))
+        return cpo_return_id
+    
+    def generate_nextIndex():
+        print("generate next index")
+
+
 def test_insert_data(string_data):
     #co_id,co_date,pro_name,co_quantity,co_vat,cl_id,cus_name
     
+    cpo_id = generate_cpo_id(str(cpo_t[len(cpo_t)-1][0]) , 0)
+    print('CPO ID : ' , cpo_id)
+
     product_data = string_data.split(",")
     print("CHECK PR DATA : " , product_data)
     for x in range(0, len(product_data), 6):
-        test_id = "co_dummy_id"
+        test_id = cpo_id
         now = datetime.now()
         test_date = now.strftime("%m/%d/%Y")
         test_name = product_data[0]
-        print("PRODUCT [3] : " , product_data[3])
-        print(type(product_data[3]))
-        test_quan = int(product_data[3])
+        #print("PRODUCT [3] : " , product_data[3])
+        #print(type(product_data[3]))
+        test_quan = int(float(product_data[3]))
         test_vat = float(product_data[4])
         test_clerk = "clerk_dummy"
         test_cust = "customer_dummy"
@@ -116,6 +160,9 @@ def test_insert_data(string_data):
         test_data = [test_id,test_date,test_name,test_quan,test_vat,test_clerk,test_cust]
 
         pythonMaria.pythonmaria_insert_customerorder(test_data)
+    
+    #quo_data = 
+    #pythonMaria.pythonmaria_insert_quotation(quo_data)
 
     
 
@@ -140,47 +187,48 @@ def tablesSelling():
 
     return render_template('tablesSelling.html',t_product=product_t)
 
-# @app.route('/postmethod', methods = ['POST'])
-# def get_post_javascript_data():
-#     jsdata = request.form['javascript_data']
-#     return json.loads(jsdata)[0]
+def old_Post():
+    # @app.route('/postmethod', methods = ['POST'])
+    # def get_post_javascript_data():
+    #     jsdata = request.form['javascript_data']
+    #     return json.loads(jsdata)[0]
 
-# @app.route('/test', methods=['GET', 'POST'])
-# def test():
-#     if request.method == 'POST':
-#         print (request.data)
-#         the_json = request.form.get('savechange', None)
-#         #this template simply prints it out and all that I get is b"
-#         print (the_json)
-#         return redirect(url_for('tablesSelling'))
+    # @app.route('/test', methods=['GET', 'POST'])
+    # def test():
+    #     if request.method == 'POST':
+    #         print (request.data)
+    #         the_json = request.form.get('savechange', None)
+    #         #this template simply prints it out and all that I get is b"
+    #         print (the_json)
+    #         return redirect(url_for('tablesSelling'))
 
-# @app.route('/tablesSelling.html', methods = ["POST"])
-# def tablesSelling_SubmitForm():
-#     if request.method == "POST":
-#         in_data = request.form['insert_data[]']
-#         print(in_data)
-#         print(type(in_data))
-#         if  not in_data:
-#             return redirect(url_for('tablesSelling'))
-#         else:
-#             return 'in_data failue'
-#     else:
-#         return 'post failue'
-        
-#     if not (request.form.getlist('insert_data[]')) :
-#         print("GET POSTED")
-#         in_data = request.form.getlist('insert_data[]')
-#         print(in_data)
-#         print(type(in_data))
-#         db_tosave = request.form.get('savechange')
-#         if db_tosave is not None:
-#             desc = request.form['productcode0']
-#             print(desc)
-#             print(type(desc))
+    # @app.route('/tablesSelling.html', methods = ["POST"])
+    # def tablesSelling_SubmitForm():
+    #     if request.method == "POST":
+    #         in_data = request.form['insert_data[]']
+    #         print(in_data)
+    #         print(type(in_data))
+    #         if  not in_data:
+    #             return redirect(url_for('tablesSelling'))
+    #         else:
+    #             return 'in_data failue'
+    #     else:
+    #         return 'post failue'
             
-#             # pythonMaria.pythonmaria_insert_customerorder(insert_data)
-#         return 'success' # redirect(url_for('tablesSelling'))
-
+    #     if not (request.form.getlist('insert_data[]')) :
+    #         print("GET POSTED")
+    #         in_data = request.form.getlist('insert_data[]')
+    #         print(in_data)
+    #         print(type(in_data))
+    #         db_tosave = request.form.get('savechange')
+    #         if db_tosave is not None:
+    #             desc = request.form['productcode0']
+    #             print(desc)
+    #             print(type(desc))
+                
+    #             # pythonMaria.pythonmaria_insert_customerorder(insert_data)
+    #         return 'success' # redirect(url_for('tablesSelling'))
+    return None
 
 @app.route('/tablesPurchasing.html') 
 def tablesPurchasing():

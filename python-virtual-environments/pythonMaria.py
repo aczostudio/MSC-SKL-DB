@@ -21,8 +21,6 @@ def pythonMaria_getConnect():
         return mrdb_connection
     except Error as e:
         print("Error connect mySQL : ",e)
-    finally:
-        print("MySQL connection is connected")
 
 def pythonMaria_closeConnect():
     if mrdb_cursor is None:
@@ -45,7 +43,7 @@ def pythonMaria_Select(field_name,table_name):
         print("Employee ID: {}".format(field_name))
         selected_list = selected_list + ("Employee ID: {}".format(field_name)) + "\n"
 
-    pythonMaria_closeConnect()
+    #pythonMaria_closeConnect()
     return rows
 
 def pythonMaria_Select2(field_name1,field_name2,table_name):
@@ -59,7 +57,7 @@ def pythonMaria_Select2(field_name1,field_name2,table_name):
     #     # print("Employee ID: {}".format(field_name))
     #     selected_list = selected_list + ("Employee ID: {}".format(field_name)) + "\n"
 
-    pythonMaria_closeConnect()
+    #pythonMaria_closeConnect()
     return rows    
 
 def convertTuple(tup): 
@@ -85,11 +83,13 @@ def pythonMaria_SelectStar(table_name):
                     
         return tables
     except Error as e:
-        print("Error reading data from mySQL table",e)
+        print("Error reading data from mySQL table: ",e)
     finally:
-        if(mrdb_connection.is_connected()):
-            pythonMaria_closeConnect()
-            print("MySQL connection is closed")
+        print("MySQL select from star : ", table_name)
+        #if(mrdb_connection.is_connected()):
+            #temp_connection = None
+            #pythonMaria_closeConnect()
+            #print("MySQL select from star")
 # print(pythonMaria_Select("Employee_Id", "employee"))
 
 def pythonmaria_insert_customerorder(data):
@@ -106,6 +106,31 @@ def pythonmaria_insert_customerorder(data):
         ins_cursor = ins_connection.cursor()
         insert_sql = "INSERT INTO customerproductorder (CustomerProductOrderId,CustomerProductOrderDate,ProductName,CustomerProductOrderQuantity,CustomerProductOrderVat,ClerkID,CustomerName) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         insert_val = (data[0], data[1], data[2], data[3], data[4], data[5], data[6])
+        ins_cursor.execute(insert_sql,insert_val)
+
+        ins_connection.commit()
+
+        print(ins_cursor.rowcount, "record inserted")
+
+    except Error as e:
+        print("Error insert data to mySQL table : ",e)
+    finally:
+        print("Insert Success")
+
+def pythonmaria_insert_quotation(data):
+    try:
+        ins_connection = mariadb.connect(
+            host='localhost',
+            user='root',
+            password='110235',
+            database='msc-skl_db',
+            charset='utf8mb4'
+        )
+
+        # ins_connection = pythonMaria_getConnect()
+        ins_cursor = ins_connection.cursor()
+        insert_sql = "INSERT INTO quotation (QuotationID,QuotationDate,QuotationTotalPrice,CustomerProductOrderID) VALUES (%s, %s, %s, %s)"
+        insert_val = (data[0], data[1], data[2], data[3])
         ins_cursor.execute(insert_sql,insert_val)
 
         ins_connection.commit()

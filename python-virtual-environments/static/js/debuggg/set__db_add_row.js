@@ -100,7 +100,7 @@ function update_db_row (product_data, table_index)
     
     if (code.length == 0) 
     {
-        console.log("CODE IF 1");
+        //console.log("CODE IF 1");
         code.options.length = 0;
         for (i = 0; i <= product_data.length; i++)
         {
@@ -110,7 +110,7 @@ function update_db_row (product_data, table_index)
                 code.add(new Option(product_data[i][0]));
             }
         }
-        console.log("CODE OPT INDEX : " + code.selectedIndex);
+        //console.log("CODE OPT INDEX : " + code.selectedIndex);
         code.selectedIndex = 0;
     }
     else if(!code.selectedIndex || code.selectedIndex >= 0)
