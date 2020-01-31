@@ -436,6 +436,14 @@
                 cus_input.quo_date = document.getElementsByName('quo_input_qDATE')[0].value;
                 cus_input.quo_num = document.getElementsByName('quo_input_qNUM')[0].value;
 
+                quo_cal = {}
+                var qo_ttl = document.getElementsByName('pricetotal0')[0].value;
+                quo_cal.quo_ttl = parseFloat(qo_ttl.replace(/,/g, ''));
+                var qo_vat = document.getElementsByName('vattotal0')[0].value;
+                quo_cal.quo_vat = parseFloat(qo_vat.replace(/,/g, ''));
+                var qo_net = document.getElementsByName('nettotal0')[0].value;
+                quo_cal.quo_net = parseFloat(qo_net.replace(/,/g, ''));
+
                 if (cus_input.cus_name == null || cus_input.cus_name == "",
                   cus_input.cus_add == null || cus_input.cus_add == "",
                   cus_input.cus_tax == null || cus_input.cus_tax == "",
@@ -448,7 +456,8 @@
                   console.log("#### SAVE CHANGE!!! ####")
                   var insert_data = [];
 
-                  insert_data.push(cus_input)
+                  insert_data.push(cus_input);
+                  insert_data.push(quo_cal);
 
                   var table_r = document.getElementById("tab_logic");
                   for (var i = 1; i < table_r.rows.length; ++i) {

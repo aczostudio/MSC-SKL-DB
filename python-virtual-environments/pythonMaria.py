@@ -126,9 +126,10 @@ def pythonmaria_insert_quotation(data):
         )
 
         # ins_connection = pythonMaria_getConnect()
+        #quo_id,quo_date,quo_total,quo_vat,quo_net,cpo_id
         ins_cursor = ins_connection.cursor()
-        insert_sql = "INSERT INTO quotation (QuotationID,QuotationDate,QuotationTotalPrice,CustomerProductOrderID) VALUES (%s, %s, %s, %s)"
-        insert_val = (data[0], data[1], data[2], data[3])
+        insert_sql = "INSERT INTO quotation (QuotationID,QuotationDate,QuotationTotalPrice,QuotationVatPrice,QuotationNetTotal,CustomerProductOrderID) VALUES (%s, %s, %s, %s, %s, %s)"
+        insert_val = (data[0], data[1], data[2], data[3], data[4], data[5])
         ins_cursor.execute(insert_sql,insert_val)
 
         ins_connection.commit()

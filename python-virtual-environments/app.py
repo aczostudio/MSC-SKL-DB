@@ -172,6 +172,11 @@ def test_insert_data(json_data):
             test_cust = p_data['cus_name']
             #datetime_now = datetime.now()
             test_date = p_data['quo_date']
+            quo_number = p_data['quo_num']
+        elif 'quo_ttl' in p_data:
+            quo_total = float(p_data['quo_ttl'])
+            quo_vatprice = float(p_data['quo_vat'])
+            quo_nettotal = float(p_data['quo_net'])
     
     print("INSERT PRODUCT LEN : ", len(insert_product))
     for in_data in insert_product:
@@ -179,6 +184,11 @@ def test_insert_data(json_data):
         print("DATA TO INSERT : " , test_data)
         pythonMaria.pythonmaria_insert_customerorder(test_data)
         test_data = []
+
+    #quo_id,quo_date,quo_total,quo_vat,quo_net,cpo_id
+    quo_data = [test_id,test_date,quo_total,quo_vatprice,quo_nettotal,test_id]
+    print("QUO TO INSERT : " , quo_data)
+    pythonMaria.pythonmaria_insert_quotation(quo_data)
 
 
     #for att in dir(string_data):
