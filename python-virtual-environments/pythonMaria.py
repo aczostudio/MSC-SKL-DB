@@ -114,8 +114,6 @@ def pythonmaria_insert_customerorder(data):
 
     except Error as e:
         print("Error insert data to mySQL table : ",e)
-    finally:
-        print("Insert Success")
 
 def pythonmaria_insert_quotation(data):
     try:
@@ -139,6 +137,4 @@ def pythonmaria_insert_quotation(data):
 
     except Error as e:
         print("Error insert data to mySQL table : ",e)
-    finally:
-        print("Insert Success")
 

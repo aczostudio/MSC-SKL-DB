@@ -1,6 +1,9 @@
 from flask import Flask ,render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 from datetime import datetime
+import re
+from html.parser import HTMLParser
+import json
 
 # app = Flask(__name__)
 import pythonMaria
@@ -98,7 +101,7 @@ def tablesProduct():
 
 product_t = pythonMaria.pythonMaria_SelectStar("product")
 cpo_t = pythonMaria.pythonMaria_SelectStar("customerproductorder")
-print('CPO : ' , cpo_t)
+#print('CPO : ' , cpo_t)
 
 pythonMaria.pythonMaria_closeConnect()
 
@@ -117,73 +120,120 @@ def generate_cpo_id(quo_l_index, adding_index):
 #print('CPO ID : ' , cpo_id)
 
 class CPO_ID_INDEX:
-    def __init__(self,lastIndex,cpoTable):
-        self.lastIndex = lastIndex
+    def __init__(self,cpoTable):
         self.cpoTable = cpoTable
-        self.currentIndex = gerenerate_curretnIndex(lastIndex)
+        self.cpoYearMonth = ''
+        cpoLastID = cpoTable[len(self.cpoTable)-1][0][-4:] if len(self.cpoTable) > 0 else 0
+        #print("CPO QUO LAST 4 DIGITS : " , )
+        #self.currentIndex = int(list(filter(str.isdigit, cpoTable[len(cpoTable)-1][0][-4:]))[0])
+        self.currentIndex = int(cpoLastID)
+        self.cpoID = self.gerenerate_currentID() 
     
-    def gerenerate_curretnIndex(lIndex):
-        cpo_month = self.cpoTable[0][1].strftime("%Y%m")
-        cpo_month = cpo_month[2:]
-        #print("CPO MONTH : " , cpo_month)
+    def gerenerate_currentID(self):
+        return_id = ''
 
-        cpo_id_num = int("".join(filter(str.isdigit, lIndex)))
+        #print("CPO CURRENT INDEX : " , self.currentIndex)
+        self.cpoYearMonth = self.cpoTable[0][1].strftime("%Y%m")[2:] if len(self.cpoTable) > 0 else datetime.now().strftime("%Y%m")[2:]
+        #print("CPO MONTH : " , self.cpoYearMonth)
         
-        cpo_month += "{0:0=4d}".format(cpo_id_num)
-        cpo_return_id = ('quo' + str(cpo_month))
-        return cpo_return_id
+        generate_id = (self.cpoYearMonth + "{0:0=4d}".format(self.currentIndex))
+        return_id = ('quo' + str(generate_id))
+        print("CPO RETURN ID : " , return_id)
+        return return_id
     
-    def generate_nextIndex():
-        print("generate next index")
+    def generate_nextIndex(self):
+        self.currentIndex += 1
+        return_next_id = self.gerenerate_currentID()
+        print("generate next index : " , return_next_id)
+        return return_next_id
 
+my_cpo_index = CPO_ID_INDEX(cpo_t)
+cpo_id = my_cpo_index.cpoID
 
-def test_insert_data(string_data):
+def test_insert_data(json_data):
     #co_id,co_date,pro_name,co_quantity,co_vat,cl_id,cus_name
+
+    for string_json in json_data:
+        json_load = json.loads(string_json)
     
-    cpo_id = generate_cpo_id(str(cpo_t[len(cpo_t)-1][0]) , 0)
-    print('CPO ID : ' , cpo_id)
+    test_id = my_cpo_index.generate_nextIndex()
+    print("JSON LOAD LEN : ", len(json_load))
 
-    product_data = string_data.split(",")
-    print("CHECK PR DATA : " , product_data)
-    for x in range(0, len(product_data), 6):
-        test_id = cpo_id
-        now = datetime.now()
-        test_date = now.strftime("%m/%d/%Y")
-        test_name = product_data[0]
-        #print("PRODUCT [3] : " , product_data[3])
-        #print(type(product_data[3]))
-        test_quan = int(float(product_data[3]))
-        test_vat = float(product_data[4])
-        test_clerk = "clerk_dummy"
-        test_cust = "customer_dummy"
-
-        test_data = [test_id,test_date,test_name,test_quan,test_vat,test_clerk,test_cust]
-
+    insert_product = []
+    for p_data in json_load:
+        print("P DATA  : " , p_data)
+        if 'co_code' in p_data :
+            test_name = p_data['co_code']
+            test_quan = int(p_data['co_amount'])
+            test_vat = float(p_data['co_vat'])
+            insert_product.append([test_name,test_quan,test_vat])
+        elif 'cus_name' in p_data:
+            test_clerk = "clerk_dummy"
+            test_cust = p_data['cus_name']
+            #datetime_now = datetime.now()
+            test_date = p_data['quo_date']
+    
+    print("INSERT PRODUCT LEN : ", len(insert_product))
+    for in_data in insert_product:
+        test_data = [test_id,test_date,in_data[0],in_data[1],in_data[2],test_clerk,test_cust]
+        print("DATA TO INSERT : " , test_data)
         pythonMaria.pythonmaria_insert_customerorder(test_data)
+        test_data = []
+
+
+    #for att in dir(string_data):
+    #    print (att, getattr(string_data,att))
+    #print("TYPE : " , type(string_data))
+    #print(dir(string_data))
+    #print(getattr(string_data))
+
+    # product_data = string_data.split(",")
+    # print("CHECK PR DATA : " , product_data)
+
+    # #test_id = cpo_id
+    # test_id = my_cpo_index.generate_nextIndex()
+
+    # for x in range(0, len(product_data), 6):
+        
+    #     datetime_now = datetime.now()
+    #     test_date = datetime_now
+    #     test_name = product_data[x+0]
+    #     #print("PRODUCT [3] : " , product_data[3])
+    #     #print(type(product_data[3]))
+    #     test_quan = int(float(product_data[x+3]))
+    #     test_vat = float(product_data[x+4])
+    #     test_clerk = "clerk_dummy"
+    #     test_cust = "customer_dummy"
+
+    #     test_data = [test_id,test_date,test_name,test_quan,test_vat,test_clerk,test_cust]
+    #     print(test_data)
+    #     pythonMaria.pythonmaria_insert_customerorder(test_data)
+    #     test_data = []
     
     #quo_data = 
     #pythonMaria.pythonmaria_insert_quotation(quo_data)
 
-    
+# @app.route('/tablesSelling.html')
+# def tablesSelling():
+#     return render_template('tablesSelling.html',t_product=product_t)
 
 @app.route('/tablesSelling.html', methods=["GET", "POST"]) 
 def tablesSelling():
-    # if request.method == "POST":
-    #     print (request.data)
-    #     the_json = request.form.get('on_submit_co', None)
-    #     #this template simply prints it out and all that I get is b"
-    #     print (the_json)
-    #     the_data = request.form['on_submit_co']
-    #     print (the_data)
-    #     return 'success'
 
     if request.method == 'POST':
-        print (request.data)
-        the_json = request.form.get('savechange', None)
+        #print ("REQUEST DATA : " , request.data)
+        #print("KEYS : " , request.form.keys)
+        the_json = request.form.getlist('savechange')
+        print("THE JSON : " , the_json)
+        print("THE JSON LEN : " , len(the_json))
+        print("TYPE OF THE JSON : " , type(the_json))
+        # the_dict = request.form.to_dict()
+        # print("THE DICT : " , the_dict)
+        # print("THE DICT LEN : " , len(the_dict))
+        # print("TYPE OF THE DICT : " , type(the_dict))
         #this template simply prints it out and all that I get is b"
-        print (the_json)
         test_insert_data(the_json)
-        return redirect(url_for('tablesSelling'))
+        #return redirect(url_for('tablesSelling'))
 
     return render_template('tablesSelling.html',t_product=product_t)
 

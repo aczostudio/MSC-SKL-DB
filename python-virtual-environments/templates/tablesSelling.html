@@ -418,7 +418,7 @@
                     <form id="on_submit_co" action="/tablesSelling.html" method="POST">
                       <input id="submit_form_input" name="json_data" type="submit" hidden=true>
                       <button type="submit" class="btn btn-primary btn-sm" name="savechange"
-                        onclick="save_change();">Save changes</button>
+                        onclick="return save_change();">Save changes</button>
                     </form>
                   </div>
                 </div>
@@ -429,55 +429,73 @@
           </div>
           <script>
             function save_change() {
-              console.log("#### SAVE CHANGE!!! ####")
-              var insert_data = [];
+                cus_input = {}
+                cus_input.cus_name = document.getElementsByName('quo_input_cNAME')[0].value;
+                cus_input.cus_add = document.getElementsByName('quo_input_cADD')[0].value;
+                cus_input.cus_tax = document.getElementsByName('quo_input_cTAX')[0].value;
+                cus_input.quo_date = document.getElementsByName('quo_input_qDATE')[0].value;
+                cus_input.quo_num = document.getElementsByName('quo_input_qNUM')[0].value;
 
-              var table_r = document.getElementById("tab_logic");
-              //console.log(table_r.rows.length);
-              //console.log(table_r.rows[1].cells);
-              for (var i = 1; i < table_r.rows.length; ++i) {
-                var co_data = [];
-                //console.log(table_r.rows[1].cells);
-                var f_code = 'productcode' + (i - 1);
-                var fd_code = document.getElementsByName(f_code)[0].value;
-                //console.log(fd_code);
-                co_data.push(fd_code);
+                if (cus_input.cus_name == null || cus_input.cus_name == "",
+                  cus_input.cus_add == null || cus_input.cus_add == "",
+                  cus_input.cus_tax == null || cus_input.cus_tax == "",
+                  cus_input.quo_date == null || cus_input.quo_date == "",
+                  cus_input.quo_num == null || cus_input.quo_num == "") {
+                  alert("Please Fill All Required Field");
+                  return false;
+                }
+                else {
+                  console.log("#### SAVE CHANGE!!! ####")
+                  var insert_data = [];
 
-                var f_desc = 'productdesc' + (i - 1);
-                var fd_desc = document.getElementsByName(f_desc)[0].value;
-                //console.log(fd_desc);
-                co_data.push(fd_desc);
+                  insert_data.push(cus_input)
 
-                var f_pric = 'price' + (i - 1);
-                var fd_pric = document.getElementsByName(f_pric)[0].value;
-                //console.log(fd_pric);
-                co_data.push(fd_pric);
+                  var table_r = document.getElementById("tab_logic");
+                  for (var i = 1; i < table_r.rows.length; ++i) {
+                    var co_data = {};
 
-                var f_amoun = 'amount' + (i - 1);
-                var fd_amoun = document.getElementsByName(f_amoun)[0].value;
-                //console.log(fd_amoun);
-                co_data.push(fd_amoun);
+                    var f_code = 'productcode' + (i - 1);
+                    var fd_code = document.getElementsByName(f_code)[0].value;
+                    //console.log(fd_code);
+                    var f_desc = 'productdesc' + (i - 1);
+                    var fd_desc = document.getElementsByName(f_desc)[0].value;
+                    //console.log(fd_desc);
+                    var f_pric = 'price' + (i - 1);
+                    var fd_pric = document.getElementsByName(f_pric)[0].value;
+                    var fd_pric_nocomma = parseFloat(fd_pric.replace(/,/g, ''));
+                    //console.log(fd_pric);
+                    var f_amoun = 'amount' + (i - 1);
+                    var fd_amoun = document.getElementsByName(f_amoun)[0].value;
+                    //console.log(fd_amoun);
+                    var f_vat = 'vat' + (i - 1);
+                    var fd_vat = document.getElementsByName(f_vat)[0].value;
+                    //console.log(fd_vat);
+                    var f_tota = 'totalprice' + (i - 1);
+                    var fd_tota = document.getElementsByName(f_tota)[0].value;
+                    var fd_tota_nocomma = parseFloat(fd_tota.replace(/,/g, ''));
+                    //console.log(fd_tota);
 
-                var f_vat = 'vat' + (i - 1);
-                var fd_vat = document.getElementsByName(f_vat)[0].value;
-                //console.log(fd_vat);
-                co_data.push(fd_vat);
+                    co_data.co_code   = fd_code;
+                    co_data.co_desc   = fd_desc;
+                    co_data.co_amount = fd_amoun;
+                    co_data.co_price  = fd_pric_nocomma;
+                    co_data.co_vat    = fd_vat;
+                    co_data.co_total  = fd_tota_nocomma;
 
-                var f_tota = 'totalprice' + (i - 1);
-                var fd_tota = document.getElementsByName(f_tota)[0].value;
-                //console.log(fd_tota);
-                co_data.push(fd_tota);
+                    if (co_data.co_amount == null || co_data.co_amount == 0 )
+                    {
+                      alert("Please Adding Quantity in All Product's Amount Field");
+                      return false;
+                    }
 
-                insert_data.push(co_data);
-                console.log(Object.values(insert_data));
-              }
+                    insert_data.push(co_data);
+                  }        
 
-              var data = insert_data;
-
-              //console.log(document.getElementById("on_submit_co"));
-              submit_form = document.getElementById('on_submit_co');
-              submit_form.elements["savechange"].value = data;
-              alert(data);
+                  submit_form = document.getElementById('on_submit_co');
+                  submit_form.elements["savechange"].value = JSON.stringify(insert_data);
+                  alert(Object.values(insert_data));
+                  return true;
+            }
               //submit_form.submit();
             }
           </script>
