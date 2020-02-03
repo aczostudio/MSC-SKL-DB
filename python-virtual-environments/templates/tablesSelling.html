@@ -12,7 +12,7 @@
   <title>Marine Store Prototype - Selling Section</title>
 
   <!-- Custom fonts for this template -->
-  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/static/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
@@ -21,7 +21,7 @@
   <link href="/static/css/sb-admin-2.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- maxcdn bootstrap
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -257,7 +257,7 @@
                     <div class="container">
                       <div class="row clearfix">
                         <div class="col-md-12 table-responsive">
-                          
+
                           <div class="container-fluid">
                             <div class="col-lg-7 ">
                               <div class="form-group row align-items-center">
@@ -288,7 +288,7 @@
                               </div>
                             </div>
                           </div>
-                          
+
                           <table class="table table-bordered table-hover table-sortable" id="tab_logic">
                             <thead>
                               <tr>
@@ -429,96 +429,96 @@
           </div>
           <script>
             function save_change() {
-                cus_input = {}
-                cus_input.cus_name = document.getElementsByName('quo_input_cNAME')[0].value;
-                cus_input.cus_add = document.getElementsByName('quo_input_cADD')[0].value;
-                cus_input.cus_tax = document.getElementsByName('quo_input_cTAX')[0].value;
-                cus_input.quo_date = document.getElementsByName('quo_input_qDATE')[0].value;
-                cus_input.quo_num = document.getElementsByName('quo_input_qNUM')[0].value;
+              cus_input = {}
+              cus_input.cus_name = document.getElementsByName('quo_input_cNAME')[0].value;
+              cus_input.cus_add = document.getElementsByName('quo_input_cADD')[0].value;
+              cus_input.cus_tax = document.getElementsByName('quo_input_cTAX')[0].value;
+              cus_input.quo_date = document.getElementsByName('quo_input_qDATE')[0].value;
+              cus_input.quo_num = document.getElementsByName('quo_input_qNUM')[0].value;
 
-                quo_cal = {}
-                var qo_ttl = document.getElementsByName('pricetotal0')[0].value;
-                quo_cal.quo_ttl = parseFloat(qo_ttl.replace(/,/g, ''));
-                var qo_vat = document.getElementsByName('vattotal0')[0].value;
-                quo_cal.quo_vat = parseFloat(qo_vat.replace(/,/g, ''));
-                var qo_net = document.getElementsByName('nettotal0')[0].value;
-                quo_cal.quo_net = parseFloat(qo_net.replace(/,/g, ''));
+              quo_cal = {}
+              var qo_ttl = document.getElementsByName('pricetotal0')[0].value;
+              quo_cal.quo_ttl = parseFloat(qo_ttl.replace(/,/g, ''));
+              var qo_vat = document.getElementsByName('vattotal0')[0].value;
+              quo_cal.quo_vat = parseFloat(qo_vat.replace(/,/g, ''));
+              var qo_net = document.getElementsByName('nettotal0')[0].value;
+              quo_cal.quo_net = parseFloat(qo_net.replace(/,/g, ''));
 
-                if (cus_input.cus_name == null || cus_input.cus_name == "",
-                  cus_input.cus_add == null || cus_input.cus_add == "",
-                  cus_input.cus_tax == null || cus_input.cus_tax == "",
-                  cus_input.quo_date == null || cus_input.quo_date == "",
-                  cus_input.quo_num == null || cus_input.quo_num == "") {
-                  alert("Please Fill All Required Field");
-                  return false;
+              if (cus_input.cus_name == null || cus_input.cus_name == "",
+                cus_input.cus_add == null || cus_input.cus_add == "",
+                cus_input.cus_tax == null || cus_input.cus_tax == "",
+                cus_input.quo_date == null || cus_input.quo_date == "",
+                cus_input.quo_num == null || cus_input.quo_num == "") {
+                alert("Please Fill All Required Field");
+                return false;
+              }
+              else {
+                console.log("#### SAVE CHANGE!!! ####")
+                var insert_data = [];
+
+                insert_data.push(cus_input);
+                insert_data.push(quo_cal);
+
+                var table_r = document.getElementById("tab_logic");
+                for (var i = 1; i < table_r.rows.length; ++i) {
+                  var co_data = {};
+
+                  var f_code = 'productcode' + (i - 1);
+                  var fd_code = document.getElementsByName(f_code)[0].value;
+                  //console.log(fd_code);
+                  var f_desc = 'productdesc' + (i - 1);
+                  var fd_desc = document.getElementsByName(f_desc)[0].value;
+                  //console.log(fd_desc);
+                  var f_pric = 'price' + (i - 1);
+                  var fd_pric = document.getElementsByName(f_pric)[0].value;
+                  var fd_pric_nocomma = parseFloat(fd_pric.replace(/,/g, ''));
+                  //console.log(fd_pric);
+                  var f_amoun = 'amount' + (i - 1);
+                  var fd_amoun = document.getElementsByName(f_amoun)[0].value;
+                  //console.log(fd_amoun);
+                  var f_vat = 'vat' + (i - 1);
+                  var fd_vat = document.getElementsByName(f_vat)[0].value;
+                  //console.log(fd_vat);
+                  var f_tota = 'totalprice' + (i - 1);
+                  var fd_tota = document.getElementsByName(f_tota)[0].value;
+                  var fd_tota_nocomma = parseFloat(fd_tota.replace(/,/g, ''));
+                  //console.log(fd_tota);
+
+                  co_data.co_code = fd_code;
+                  co_data.co_desc = fd_desc;
+                  co_data.co_amount = fd_amoun;
+                  co_data.co_price = fd_pric_nocomma;
+                  co_data.co_vat = fd_vat;
+                  co_data.co_total = fd_tota_nocomma;
+
+                  if (co_data.co_amount == null || co_data.co_amount == 0) {
+                    alert("Please Adding Quantity in All Product's Amount Field");
+                    return false;
+                  }
+
+                  insert_data.push(co_data);
                 }
-                else {
-                  console.log("#### SAVE CHANGE!!! ####")
-                  var insert_data = [];
 
-                  insert_data.push(cus_input);
-                  insert_data.push(quo_cal);
-
-                  var table_r = document.getElementById("tab_logic");
-                  for (var i = 1; i < table_r.rows.length; ++i) {
-                    var co_data = {};
-
-                    var f_code = 'productcode' + (i - 1);
-                    var fd_code = document.getElementsByName(f_code)[0].value;
-                    //console.log(fd_code);
-                    var f_desc = 'productdesc' + (i - 1);
-                    var fd_desc = document.getElementsByName(f_desc)[0].value;
-                    //console.log(fd_desc);
-                    var f_pric = 'price' + (i - 1);
-                    var fd_pric = document.getElementsByName(f_pric)[0].value;
-                    var fd_pric_nocomma = parseFloat(fd_pric.replace(/,/g, ''));
-                    //console.log(fd_pric);
-                    var f_amoun = 'amount' + (i - 1);
-                    var fd_amoun = document.getElementsByName(f_amoun)[0].value;
-                    //console.log(fd_amoun);
-                    var f_vat = 'vat' + (i - 1);
-                    var fd_vat = document.getElementsByName(f_vat)[0].value;
-                    //console.log(fd_vat);
-                    var f_tota = 'totalprice' + (i - 1);
-                    var fd_tota = document.getElementsByName(f_tota)[0].value;
-                    var fd_tota_nocomma = parseFloat(fd_tota.replace(/,/g, ''));
-                    //console.log(fd_tota);
-
-                    co_data.co_code   = fd_code;
-                    co_data.co_desc   = fd_desc;
-                    co_data.co_amount = fd_amoun;
-                    co_data.co_price  = fd_pric_nocomma;
-                    co_data.co_vat    = fd_vat;
-                    co_data.co_total  = fd_tota_nocomma;
-
-                    if (co_data.co_amount == null || co_data.co_amount == 0 )
-                    {
-                      alert("Please Adding Quantity in All Product's Amount Field");
-                      return false;
-                    }
-
-                    insert_data.push(co_data);
-                  }        
-
-                  submit_form = document.getElementById('on_submit_co');
-                  submit_form.elements["savechange"].value = JSON.stringify(insert_data);
-                  alert(Object.values(insert_data));
-                  return true;
-            }
+                submit_form = document.getElementById('on_submit_co');
+                submit_form.elements["savechange"].value = JSON.stringify(insert_data);
+                alert(Object.values(insert_data));
+                return true;
+              }
               //submit_form.submit();
             }
           </script>
 
+          
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">List of quotation</h6>
             </div>
-
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                      <th>Appendix</th>
                       <th>Quotation No.</th>
                       <th>Quotation date</th>
                       <th>Quotation price summarize</th>
@@ -528,7 +528,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr >
+                      <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-plus"></i> </button></td>
                       <td>quo20190328-0001</td>
                       <td>2019/03/28</td>
                       <td>9,999.-</td>
@@ -537,6 +538,33 @@
                       <td>Bistro</td>
                     </tr>
                     <tr>
+                      <td colspan="7" class="table-hiddenRow">
+                        <div class="accordian-body collapse" id="demo1">
+                          <table class="table table-dark">
+                            <thead>
+                              <tr>
+                                <th>Access Key</th>
+                                <th>Secret Key</th>
+                                <th>Status </th>
+                                <th>Created</th>
+                                <th>Expires</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>access-key-1</td>
+                                <td>secretKey-1</td>
+                                <td>Status</td>
+                                <td>some date</td>
+                                <td>some date</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-plus"></i> </button></td>
                       <td>quo20190329-0002</td>
                       <td>2019/03/29</td>
                       <td>3,939.-</td>
@@ -545,6 +573,33 @@
                       <td>Featherman</td>
                     </tr>
                     <tr>
+                      <td colspan="6" class="table-hiddenRow">
+                        <div class="accordian-body collapse" id="demo2">
+                          <table class="table table-borderless">
+                            <thead>
+                              <tr>
+                                <th>Access Key</th>
+                                <th>Secret Key</th>
+                                <th>Status </th>
+                                <th>Created</th>
+                                <th>Expires</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>access-key-1</td>
+                                <td>secretKey-1</td>
+                                <td>Status</td>
+                                <td>some date</td>
+                                <td>some date</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-plus"></i> </button></td>
                       <td>quo20190330-0003</td>
                       <td>2019/03/30</td>
                       <td>9,696.-</td>
@@ -553,6 +608,7 @@
                       <td>Marimax</td>
                     </tr>
                     <tr>
+                      <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-plus"></i> </button></td>
                       <td>quo20190331-0004</td>
                       <td>2019/03/31</td>
                       <td>1,199.-</td>
@@ -561,6 +617,7 @@
                       <td>Wariocean</td>
                     </tr>
                     <tr>
+                      <td><button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" type="button" class="btn btn-secondary btn-sm" ><i class="fas fa-plus"></i> </button></td>
                       <td>quo20190331-0005</td>
                       <td>2019/03/31</td>
                       <td>2,424.-</td>
@@ -573,7 +630,7 @@
               </div>
             </div>
 
-            <!-- DataTales Example -->
+            <!-- DataTales Example 
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">List of delivery order</h6>
@@ -628,7 +685,7 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div>-->
             <!-- End of DataTales Example -->
 
           </div>
