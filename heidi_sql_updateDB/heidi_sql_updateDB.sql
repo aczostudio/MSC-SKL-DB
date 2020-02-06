@@ -33,22 +33,16 @@ INSERT INTO `customer` (`CustomerName`, `CustomerAddress`, `CustomerContactInfo`
 	('บริษัท แกรนด์ไลออน จำกัด', '96 ถ.สวนสิริ ต.หาดใหญ่ อ.หาดใหญ่ จ.สงขลา 90110', '081-896-6017 info@gr.go.th', '0905554002180');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
--- Dumping data for table msc-skl_db.customerproductorder: ~12 rows (approximately)
+-- Dumping data for table msc-skl_db.customerproductorder: ~6 rows (approximately)
 DELETE FROM `customerproductorder`;
 /*!40000 ALTER TABLE `customerproductorder` DISABLE KEYS */;
 INSERT INTO `customerproductorder` (`CustomerProductOrderID`, `CustomerProductOrderDate`, `ProductName`, `CustomerProductOrderQuantity`, `CustomerProductOrderVat`, `ClerkID`, `CustomerName`) VALUES
-	('quo20010002', '2020-01-30', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'customer_dummy'),
-	('quo20010002', '2020-01-30', 'BA-CYLN-RONGUI', 2, 0, 'clerk_dummy', 'customer_dummy'),
-	('quo20010003', '2020-01-30', 'FE-AF-20L', 3, 0, 'clerk_dummy', 'customer_dummy'),
-	('quo20010003', '2020-01-30', 'FE-AF-6.0', 4, 0.07, 'clerk_dummy', 'customer_dummy'),
-	('quo20010004', '2020-01-31', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'customer_dummy'),
-	('quo20010004', '2020-01-31', 'FE-AF-20L', 2, 0, 'clerk_dummy', 'customer_dummy'),
-	('quo20010005', '2020-01-31', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'customer_dummy'),
-	('quo20010005', '2020-01-31', 'FE-AF-20L', 2, 0, 'clerk_dummy', 'customer_dummy'),
-	('quo20010006', '2020-01-31', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'customer_dummy'),
-	('quo20010006', '2020-01-31', 'FE-AF-20L', 2, 0, 'clerk_dummy', 'customer_dummy'),
-	('quo20010007', '2020-01-27', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'msit'),
-	('quo20010007', '2020-01-27', 'FE-AF-20L', 2, 0, 'clerk_dummy', 'msit');
+	('quo20010002', '2020-01-28', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'msit'),
+	('quo20010002', '2020-01-28', 'FE-AF-20L', 3, 0, 'clerk_dummy', 'msit'),
+	('quo20010003', '2020-01-28', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'msit'),
+	('quo20010003', '2020-01-28', 'FE-AF-20L', 3, 0, 'clerk_dummy', 'msit'),
+	('quo20010004', '2020-01-28', 'BA-CYLN-HWAYAN', 1, 0.07, 'clerk_dummy', 'msit'),
+	('quo20010004', '2020-01-28', 'FE-AF-20L', 3, 0, 'clerk_dummy', 'msit');
 /*!40000 ALTER TABLE `customerproductorder` ENABLE KEYS */;
 
 -- Dumping data for table msc-skl_db.employee: ~0 rows (approximately)
@@ -67,9 +61,12 @@ INSERT INTO `product` (`ProductName`, `ProductDescription`, `ProductPrice`, `Pro
 	('TS-PRODUCT', 'Test Producct', 999, 'Test', 99);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
--- Dumping data for table msc-skl_db.quotation: ~0 rows (approximately)
+-- Dumping data for table msc-skl_db.quotation: ~2 rows (approximately)
 DELETE FROM `quotation`;
 /*!40000 ALTER TABLE `quotation` DISABLE KEYS */;
+INSERT INTO `quotation` (`QuotationID`, `QuotationDate`, `QuotationTotalPrice`, `QuotationVatPrice`, `QuotationNetTotal`, `CustomerProductOrderID`) VALUES
+	('quo20010003', '2020-01-27', 11111, 111, 11222, 'quo20010003'),
+	('quo20010004', '2020-01-28', 26500, 700, 27200, 'quo20010004');
 /*!40000 ALTER TABLE `quotation` ENABLE KEYS */;
 
 -- Dumping data for table msc-skl_db.tools: ~0 rows (approximately)

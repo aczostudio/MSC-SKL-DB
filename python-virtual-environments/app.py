@@ -1,14 +1,14 @@
+import re
+import json
+import os
+
 from flask import Flask ,render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 from datetime import datetime
-import re
 from html.parser import HTMLParser
-import json
+from pythonMaria import pythonMaria
 
 # app = Flask(__name__)
-import pythonMaria
-import os
-import json
 
 def oldapproute():
     # @app.route('/')
@@ -66,6 +66,8 @@ def users():
 
 # customer_t = pythonMaria.pythonMaria_SelectStar("customer")
 
+ptMaria = pythonMaria()
+
 @app.route('/')
 @app.route('/login.html')
 def login():
@@ -99,11 +101,12 @@ def tablesCustomer():
 def tablesProduct():
     return render_template('tablesProduct.html')
 
-product_t = pythonMaria.pythonMaria_SelectStar("product")
-cpo_t = pythonMaria.pythonMaria_SelectStar("customerproductorder")
-#print('CPO : ' , cpo_t)
+product_t = ptMaria.pythonMaria_SelectStar("product")
+cpo_t = ptMaria.pythonMaria_SelectStar("customerproductorder")
+quo_t = ptMaria.pythonMaria_SelectStar("quotation")
+print('QUO : ' , quo_t)
 
-pythonMaria.pythonMaria_closeConnect()
+ptMaria.pythonMaria_closeConnect()
 
 def generate_cpo_id(quo_l_index, adding_index):
     cpo_month = cpo_t[0][1].strftime("%Y%m")
@@ -115,9 +118,6 @@ def generate_cpo_id(quo_l_index, adding_index):
     cpo_month += "{0:0=4d}".format(cpo_id_num)
     cpo_return_id = ('quo' + str(cpo_month))
     return cpo_return_id
-
-#cpo_id = generate_cpo_id(str(cpo_t[len(cpo_t)-1][0]))
-#print('CPO ID : ' , cpo_id)
 
 class CPO_ID_INDEX:
     def __init__(self,cpoTable):
@@ -182,70 +182,26 @@ def test_insert_data(json_data):
     for in_data in insert_product:
         test_data = [test_id,test_date,in_data[0],in_data[1],in_data[2],test_clerk,test_cust]
         print("DATA TO INSERT : " , test_data)
-        pythonMaria.pythonmaria_insert_customerorder(test_data)
+        ptMaria.pythonmaria_insert_customerorder(test_data)
         test_data = []
 
     #quo_id,quo_date,quo_total,quo_vat,quo_net,cpo_id
     quo_data = [test_id,test_date,quo_total,quo_vatprice,quo_nettotal,test_id]
     print("QUO TO INSERT : " , quo_data)
-    pythonMaria.pythonmaria_insert_quotation(quo_data)
+    ptMaria.pythonmaria_insert_quotation(quo_data)
 
-
-    #for att in dir(string_data):
-    #    print (att, getattr(string_data,att))
-    #print("TYPE : " , type(string_data))
-    #print(dir(string_data))
-    #print(getattr(string_data))
-
-    # product_data = string_data.split(",")
-    # print("CHECK PR DATA : " , product_data)
-
-    # #test_id = cpo_id
-    # test_id = my_cpo_index.generate_nextIndex()
-
-    # for x in range(0, len(product_data), 6):
-        
-    #     datetime_now = datetime.now()
-    #     test_date = datetime_now
-    #     test_name = product_data[x+0]
-    #     #print("PRODUCT [3] : " , product_data[3])
-    #     #print(type(product_data[3]))
-    #     test_quan = int(float(product_data[x+3]))
-    #     test_vat = float(product_data[x+4])
-    #     test_clerk = "clerk_dummy"
-    #     test_cust = "customer_dummy"
-
-    #     test_data = [test_id,test_date,test_name,test_quan,test_vat,test_clerk,test_cust]
-    #     print(test_data)
-    #     pythonMaria.pythonmaria_insert_customerorder(test_data)
-    #     test_data = []
-    
-    #quo_data = 
-    #pythonMaria.pythonmaria_insert_quotation(quo_data)
-
-# @app.route('/tablesSelling.html')
-# def tablesSelling():
-#     return render_template('tablesSelling.html',t_product=product_t)
+    quo_t = quo_t = ptMaria.pythonMaria_SelectStar("quotation")
+    print('UPDATE QUO : ' , quo_t)
 
 @app.route('/tablesSelling.html', methods=["GET", "POST"]) 
 def tablesSelling():
 
     if request.method == 'POST':
-        #print ("REQUEST DATA : " , request.data)
-        #print("KEYS : " , request.form.keys)
         the_json = request.form.getlist('savechange')
-        print("THE JSON : " , the_json)
-        print("THE JSON LEN : " , len(the_json))
-        print("TYPE OF THE JSON : " , type(the_json))
-        # the_dict = request.form.to_dict()
-        # print("THE DICT : " , the_dict)
-        # print("THE DICT LEN : " , len(the_dict))
-        # print("TYPE OF THE DICT : " , type(the_dict))
         #this template simply prints it out and all that I get is b"
         test_insert_data(the_json)
-        #return redirect(url_for('tablesSelling'))
 
-    return render_template('tablesSelling.html',t_product=product_t)
+    return render_template('tablesSelling.html',t_product=product_t,t_quotation = quo_t)
 
 def old_Post():
     # @app.route('/postmethod', methods = ['POST'])
