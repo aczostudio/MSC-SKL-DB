@@ -10,51 +10,7 @@ from pythonMaria import pythonMaria
 
 app = Flask(__name__) 
 mysql = MySQL(app)
-def users():
-        cur = mysql.connection.cursor()
-        cur.execute('''SELECT user, host FROM mysql.user''')
-        rv = cur.fetchall() 
-        return str(rv)
-# app._static_folder = os.path.abspath("static")
-
-# mariarows = pythonMaria.pythonMaria_Select2("Employee_ID","Employee_FirstName","employee")
-
-# customer_t = pythonMaria.pythonMaria_SelectStar("customer")
-
 ptMaria = pythonMaria()
-
-@app.route('/')
-@app.route('/login.html')
-def login():
-    return render_template('login.html')
-
-@app.route('/index.html')
-def index():
-    return render_template('index.html')
-
-@app.route("/mrdb.html")
-def mrdb():
-    return render_template('inventory.html')
-
-@app.route('/register.html')
-def register():
-    return render_template('register.html')
-
-@app.route('/tables.html')
-def tables():
-    return render_template('tables.html')
-
-@app.route('/tablesEmployee.html')
-def tablesEmployee():
-    return render_template('tablesEmployee.html')
-
-@app.route('/tablesCustomer.html')
-def tablesCustomer():
-    return render_template('tablesCustomer.html')
-
-@app.route('/tablesProduct.html')
-def tablesProduct():
-    return render_template('tablesProduct.html')
 
 product_t = ptMaria.pythonMaria_SelectStar("product")
 cpo_t = ptMaria.pythonMaria_SelectStar("customerproductorder")
@@ -149,15 +105,97 @@ def test_insert_data(json_data):
     quo_t = quo_t = ptMaria.pythonMaria_SelectStar("quotation")
     print('UPDATE QUO : ' , quo_t)
 
+@app.route('/')
+@app.route('/login.html')
+def login():
+    return render_template('login.html')
+
+@app.route('/index.html')
+def index():
+    return render_template('index.html')
+
+@app.route('/tablesEmployee.html')
+def tablesEmployee():
+    return render_template('tablesEmployee.html')
+
+@app.route('/tablesCustomer.html')
+def tablesCustomer():
+    return render_template('tablesCustomer.html')
+
+@app.route('/tablesProduct.html')
+def tablesProduct():
+    return render_template('tablesProduct.html')
+
 @app.route('/tablesSelling.html', methods=["GET", "POST"]) 
 def tablesSelling():
-
     if request.method == 'POST':
         the_json = request.form.getlist('savechange')
         #this template simply prints it out and all that I get is b"
         test_insert_data(the_json)
 
     return render_template('tablesSelling.html',t_product=product_t,t_quotation = quo_t)
+
+@app.route('/tablesPurchasing.html') 
+def tablesPurchasing():
+    return render_template('tablesPurchasing.html')
+
+@app.route('/404.html')
+def err404():
+    return render_template('404.html')
+
+def oldroute():
+    print("OLD ROUTE")
+    # @app.route('/blank.html')
+    # def blank():
+    #     return render_template('blank.html')
+
+    # @app.route('/buttons.html')
+    # def buttons():
+    #     return render_template('buttons.html')
+
+    # @app.route('/cards.html')
+    # def cards():
+    #     return render_template('cardstest.html')
+
+    # @app.route('/charts.html')
+    # def charts():
+    #     return render_template('charts.html')
+
+    # @app.route('/forgot-password.html')
+    # def forgot_password():
+    #     return render_template('forgot-password.html')
+
+    # @app.route('/utilities-animation.html')
+    # def utilities_animation():
+    #     return render_template('utilities-animation.html')
+
+    # @app.route('/utilities-border.html')
+    # def utilities_border():
+    #     return render_template('utilities-border.html')
+
+    # @app.route('/utilities-color.html')
+    # def utilities_color():
+    #     return render_template('utilities-color.html')
+
+    # @app.route('/utilities-other.html')
+    # def utilities_other():
+    #     return render_template('utilities-other.html')
+
+    # @app.route("/mrdb.html")
+    # def mrdb():
+    #     return render_template('inventory.html')
+
+    # @app.route('/register.html')
+    # def register():
+    #     return render_template('register.html')
+
+    # @app.route('/tables.html')
+    # def tables():
+    #     return render_template('tables.html')
+
+    # @app.route('/tablesAccountant.html') 
+    # def tablesAccountant():
+    #     return render_template('tablesAccountant.html')
 
 def old_Post():
     # @app.route('/postmethod', methods = ['POST'])
@@ -201,54 +239,6 @@ def old_Post():
     #             # pythonMaria.pythonmaria_insert_customerorder(insert_data)
     #         return 'success' # redirect(url_for('tablesSelling'))
     return None
-
-@app.route('/tablesPurchasing.html') 
-def tablesPurchasing():
-    return render_template('tablesPurchasing.html')
-
-@app.route('/tablesAccountant.html') 
-def tablesAccountant():
-    return render_template('tablesAccountant.html')
-
-@app.route('/404.html')
-def err404():
-    return render_template('404.html')
-
-@app.route('/blank.html')
-def blank():
-    return render_template('blank.html')
-
-@app.route('/buttons.html')
-def buttons():
-    return render_template('buttons.html')
-
-@app.route('/cards.html')
-def cards():
-    return render_template('cardstest.html')
-
-@app.route('/charts.html')
-def charts():
-    return render_template('charts.html')
-
-@app.route('/forgot-password.html')
-def forgot_password():
-    return render_template('forgot-password.html')
-
-@app.route('/utilities-animation.html')
-def utilities_animation():
-    return render_template('utilities-animation.html')
-
-@app.route('/utilities-border.html')
-def utilities_border():
-    return render_template('utilities-border.html')
-
-@app.route('/utilities-color.html')
-def utilities_color():
-    return render_template('utilities-color.html')
-
-@app.route('/utilities-other.html')
-def utilities_other():
-    return render_template('utilities-other.html')
 
 if __name__ == '__main__':
     app.run(port=80,debug=True)
