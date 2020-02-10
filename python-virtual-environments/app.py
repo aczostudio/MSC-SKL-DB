@@ -8,51 +8,6 @@ from datetime import datetime
 from html.parser import HTMLParser
 from pythonMaria import pythonMaria
 
-# app = Flask(__name__)
-
-def oldapproute():
-    # @app.route('/')
-    # def index():
-    #     return "Flask App!"
-
-    # @app.route("/hello/<string:name>/")
-    # def hello(name):
-    #     return render_template('test.html',name=name)
-
-    # if __name__ == "__main__":
-    #     app.run(host='0.0.0.0', port = 80)
-    print("old app route")
-
-def oldcode():
-    # mysql = MySQL(app)
-
-    # @app.route('/')
-    # def users():
-    #     cur = mysql.connection.cursor()
-    #     cur.execute('''SELECT user, host FROM mysql.user''')
-    #     rv = cur.fetchall()
-    #     return str(rv)
-
-    # import os from flask import send_from_directory 
-    # @app.route('/favicon.ico') 
-    # def favicon(): 
-    #     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-    # mariarows = pythonMaria.pythonMaria_Select2("Employee_ID","Employee_FirstName","employee")
-
-    # @app.route("/mrdb/")
-    # def mrdb():
-    #     return render_template('inventory.html',rows=mariarows)
-
-    # @app.route("/hello/")
-    # def hello():
-    #     # tempRender = tempRend.temp_Render()
-    #     return tempRend.temp_Render()
-
-    print("old code")
-
-# template_dir = os.path.abspath('templates')
-# app = Flask(__name__,template_folder=template_dir)
 app = Flask(__name__) 
 mysql = MySQL(app)
 def users():
@@ -104,7 +59,8 @@ def tablesProduct():
 product_t = ptMaria.pythonMaria_SelectStar("product")
 cpo_t = ptMaria.pythonMaria_SelectStar("customerproductorder")
 quo_t = ptMaria.pythonMaria_SelectStar("quotation")
-print('QUO : ' , quo_t)
+cpoANDpro_t = ptMaria.pythonmaria_innerjoin_cpoANDpro()
+print('CPO and PRO : ' , cpoANDpro_t)
 
 ptMaria.pythonMaria_closeConnect()
 

@@ -25,3 +25,8 @@ function update_quo_table(table_id, quo_data,toggle_table)
     var last_cell = last_row.insertCell(0);
     last_cell.appendChild(btn);
 }
+
+function update_quo_collapse(table_id,quo_collapse,toggle_id)
+{
+    
+}

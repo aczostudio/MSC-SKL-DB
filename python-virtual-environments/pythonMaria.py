@@ -99,6 +99,20 @@ class pythonMaria:
                 #print("MySQL select from star")
     # print(pythonMaria_Select("Employee_Id", "employee"))
 
+    def pythonmaria_innerjoin_cpoANDpro(self):
+        temp_connection = self.pythonMaria_getConnect()
+        mrcursor = temp_connection.cursor()
+        mrcursor.execute("SELECT cpo.CustomerProductOrderID, cpo.CustomerProductOrderQuantity, cpo.CustomerProductOrderVat, cpo.ProductName, pro.ProductDescription, pro.ProductPrice FROM customerproductorder cpo JOIN product pro ON cpo.ProductName = pro.ProductName")
+        cpoANDpro = mrcursor.fetchall()
+        #print((rows))
+        # selected_list = ""
+        # for field_name in mrcursor:
+        #     # print("Employee ID: {}".format(field_name))
+        #     selected_list = selected_list + ("Employee ID: {}".format(field_name)) + "\n"
+
+        #pythonMaria_closeConnect()
+        return cpoANDpro
+
     def pythonmaria_insert_customerorder(self,data):
         try:
             ins_connection = mariadb.connect(
@@ -145,4 +159,6 @@ class pythonMaria:
 
         except Error as e:
             print("Error insert data to mySQL table : ",e)
+
+    
 
