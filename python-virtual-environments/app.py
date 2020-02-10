@@ -23,8 +23,6 @@ ptMaria.pythonMaria_closeConnect()
 def generate_cpo_id(quo_l_index, adding_index):
     cpo_month = cpo_t[0][1].strftime("%Y%m")
     cpo_month = cpo_month[2:]
-    #print("CPO MONTH : " , cpo_month)
-
     cpo_id_num = int("".join(filter(str.isdigit, quo_l_index)))
     
     cpo_month += "{0:0=4d}".format(cpo_id_num)
@@ -134,6 +132,18 @@ def tablesPurchasing():
 def err404():
     return render_template('404.html')
 
+if __name__ == '__main__':
+    app.run(port=80,debug=True)
+
+
+
+
+
+
+
+
+
+
 def oldroute():
     print("OLD ROUTE")
     # @app.route('/blank.html')
@@ -231,5 +241,4 @@ def old_Post():
     #         return 'success' # redirect(url_for('tablesSelling'))
     return None
 
-if __name__ == '__main__':
-    app.run(port=80,debug=True)
+
