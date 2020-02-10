@@ -36,27 +36,19 @@ class CPO_ID_INDEX:
         self.cpoTable = cpoTable
         self.cpoYearMonth = ''
         cpoLastID = cpoTable[len(self.cpoTable)-1][0][-4:] if len(self.cpoTable) > 0 else 0
-        #print("CPO QUO LAST 4 DIGITS : " , )
-        #self.currentIndex = int(list(filter(str.isdigit, cpoTable[len(cpoTable)-1][0][-4:]))[0])
         self.currentIndex = int(cpoLastID)
         self.cpoID = self.gerenerate_currentID() 
     
     def gerenerate_currentID(self):
         return_id = ''
-
-        #print("CPO CURRENT INDEX : " , self.currentIndex)
         self.cpoYearMonth = self.cpoTable[0][1].strftime("%Y%m")[2:] if len(self.cpoTable) > 0 else datetime.now().strftime("%Y%m")[2:]
-        #print("CPO MONTH : " , self.cpoYearMonth)
-        
         generate_id = (self.cpoYearMonth + "{0:0=4d}".format(self.currentIndex))
         return_id = ('quo' + str(generate_id))
-        print("CPO RETURN ID : " , return_id)
         return return_id
     
     def generate_nextIndex(self):
         self.currentIndex += 1
         return_next_id = self.gerenerate_currentID()
-        print("generate next index : " , return_next_id)
         return return_next_id
 
 my_cpo_index = CPO_ID_INDEX(cpo_t)
@@ -64,7 +56,6 @@ cpo_id = my_cpo_index.cpoID
 
 def test_insert_data(json_data):
     #co_id,co_date,pro_name,co_quantity,co_vat,cl_id,cus_name
-
     for string_json in json_data:
         json_load = json.loads(string_json)
     
