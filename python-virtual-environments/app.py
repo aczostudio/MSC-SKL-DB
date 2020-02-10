@@ -119,7 +119,6 @@ def tablesProduct():
 def tablesSelling():
     if request.method == 'POST':
         the_json = request.form.getlist('savechange')
-        #this template simply prints it out and all that I get is b"
         test_insert_data(the_json)
 
     return render_template('tablesSelling.html',t_product=product_t,t_quotation = quo_t)

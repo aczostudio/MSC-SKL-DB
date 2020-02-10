@@ -404,24 +404,23 @@
 
                   var f_code = 'productcode' + (i - 1);
                   var fd_code = document.getElementsByName(f_code)[0].value;
-                  //console.log(fd_code);
+                  
                   var f_desc = 'productdesc' + (i - 1);
                   var fd_desc = document.getElementsByName(f_desc)[0].value;
-                  //console.log(fd_desc);
+                  
                   var f_pric = 'price' + (i - 1);
                   var fd_pric = document.getElementsByName(f_pric)[0].value;
                   var fd_pric_nocomma = parseFloat(fd_pric.replace(/,/g, ''));
-                  //console.log(fd_pric);
+                  
                   var f_amoun = 'amount' + (i - 1);
                   var fd_amoun = document.getElementsByName(f_amoun)[0].value;
-                  //console.log(fd_amoun);
+                  
                   var f_vat = 'vat' + (i - 1);
                   var fd_vat = document.getElementsByName(f_vat)[0].value;
-                  //console.log(fd_vat);
+                  
                   var f_tota = 'totalprice' + (i - 1);
                   var fd_tota = document.getElementsByName(f_tota)[0].value;
                   var fd_tota_nocomma = parseFloat(fd_tota.replace(/,/g, ''));
-                  //console.log(fd_tota);
 
                   co_data.co_code = fd_code;
                   co_data.co_desc = fd_desc;
@@ -434,20 +433,16 @@
                     alert("Please Adding Quantity in All Product's Amount Field");
                     return false;
                   }
-
                   insert_data.push(co_data);
                 }
-
                 submit_form = document.getElementById('on_submit_co');
                 submit_form.elements["savechange"].value = JSON.stringify(insert_data);
                 alert(Object.values(insert_data));
                 return true;
               }
-              //submit_form.submit();
             }
           </script>
 
-          
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">List of quotation</h6>
@@ -569,7 +564,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/static/js/sb-admin-2.min.js"></script>
-    
+
     <!-- Page level custom scripts -->
     <script src="/static/js/demo/addremovetables-demo.js"></script>
     <script src="/static/js/debuggg/set__db_add_row.js"></script>
