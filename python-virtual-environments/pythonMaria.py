@@ -31,30 +31,6 @@ class pythonMaria:
             self.mrdb_connection.close()
             self.mrdb_connection = None
 
-    def pythonMaria_Select(self,field_name,table_name):
-        temp_connection = self.pythonMaria_getConnect()
-        mrcursor = temp_connection.cursor()
-        mrcursor.execute("SELECT {} FROM {}".format(field_name,table_name))
-        rows = mrcursor.fetchall()
-        print((rows))
-        selected_list = ""
-        for field_name in mrcursor:
-            print("Employee ID: {}".format(field_name))
-            selected_list = selected_list + ("Employee ID: {}".format(field_name)) + "\n"
-
-        return rows
-
-    def pythonMaria_Select2(self,field_name1,field_name2,table_name):
-        temp_connection = self.pythonMaria_getConnect()
-        mrcursor = temp_connection.cursor()
-        mrcursor.execute("SELECT {},{} FROM {}".format(field_name1,field_name2,table_name))
-        rows = mrcursor.fetchall()
-        return rows    
-
-    def convertTuple(tup): 
-        str =  ''.join(tup) 
-        return str
-
     def pythonMaria_SelectStar(self,table_name):
         try:
             temp_connection = self.pythonMaria_getConnect()
@@ -121,4 +97,27 @@ class pythonMaria:
             print("Error insert data to mySQL table : ",e)
 
     
+    def pythonMaria_Select(self,field_name,table_name):
+        temp_connection = self.pythonMaria_getConnect()
+        mrcursor = temp_connection.cursor()
+        mrcursor.execute("SELECT {} FROM {}".format(field_name,table_name))
+        rows = mrcursor.fetchall()
+        print((rows))
+        selected_list = ""
+        for field_name in mrcursor:
+            print("Employee ID: {}".format(field_name))
+            selected_list = selected_list + ("Employee ID: {}".format(field_name)) + "\n"
+
+        return rows
+
+    def pythonMaria_Select2(self,field_name1,field_name2,table_name):
+        temp_connection = self.pythonMaria_getConnect()
+        mrcursor = temp_connection.cursor()
+        mrcursor.execute("SELECT {},{} FROM {}".format(field_name1,field_name2,table_name))
+        rows = mrcursor.fetchall()
+        return rows    
+
+    def convertTuple(tup): 
+        str =  ''.join(tup) 
+        return str
 

@@ -105,15 +105,15 @@ def index():
 
 @app.route('/tablesEmployee.html')
 def tablesEmployee():
-    return render_template('tablesEmployee.html')
+    return render_template('underconstruction.html')
 
 @app.route('/tablesCustomer.html')
 def tablesCustomer():
-    return render_template('tablesCustomer.html')
+    return render_template('underconstruction.html')
 
 @app.route('/tablesProduct.html')
 def tablesProduct():
-    return render_template('tablesProduct.html')
+    return render_template('underconstruction.html')
 
 @app.route('/tablesSelling.html', methods=["GET", "POST"]) 
 def tablesSelling():
@@ -125,7 +125,7 @@ def tablesSelling():
 
 @app.route('/tablesPurchasing.html') 
 def tablesPurchasing():
-    return render_template('tablesPurchasing.html')
+    return render_template('underconstruction.html')
 
 @app.route('/404.html')
 def err404():
