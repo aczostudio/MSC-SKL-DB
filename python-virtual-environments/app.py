@@ -134,15 +134,6 @@ def err404():
 if __name__ == '__main__':
     app.run(port=80,debug=True)
 
-
-
-
-
-
-
-
-
-
 def oldroute():
     print("OLD ROUTE")
     # @app.route('/blank.html')

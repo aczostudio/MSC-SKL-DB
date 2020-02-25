@@ -477,20 +477,22 @@
                           <table class="table table-dark">
                             <thead>
                               <tr>
-                                <th>Access Key</th>
-                                <th>Secret Key</th>
-                                <th>Status </th>
-                                <th>Created</th>
-                                <th>Expires</th>
+                                <th>Product ID</th>
+                                <th>Product Description</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Vat</th>
+                                <th>Total</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td>access-key-1</td>
-                                <td>secretKey-1</td>
-                                <td>Status</td>
-                                <td>some date</td>
-                                <td>some date</td>
+                                <td>PRODUCT-TEST-ID</td>
+                                <td>Product Test Description</td>
+                                <td>9,999.-</td>
+                                <td>99</td>
+                                <td>0.07</td>
+                                <th>1,059,194.07.-</th>
                               </tr>
                             </tbody>
                           </table>
@@ -503,10 +505,9 @@
             </div>
             <script>
               for(i = 0;i < maria_quotation.length; i++){
-                update_quo_table("quoTable",maria_quotation[i],"#demo"+i);
-                
+              //for(i = 0;i < 1; i++){
+                update_quo_table("quoTable",maria_quotation[i],"#demo1");//"+(i+1));
               }
-
             </script>
           </div>
           <!-- /.container-fluid -->
