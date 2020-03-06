@@ -39,10 +39,13 @@ class CPO_ID_INDEX:
     
     def gerenerate_currentID(self):
         return_id = ''
-        self.cpoYearMonth = self.cpoTable[0][1].strftime("%Y%m")[2:] if len(self.cpoTable) > 0 else datetime.now().strftime("%Y%m")[2:]
-        generate_id = (self.cpoYearMonth + "{0:0=4d}".format(self.currentIndex))
-        return_id = ('quo' + str(generate_id))
-        return return_id
+        try:
+            self.cpoYearMonth = self.cpoTable[0][1].strftime("%Y%m")[2:] if len(self.cpoTable) > 0 else datetime.now().strftime("%Y%m")[2:]
+            generate_id = (self.cpoYearMonth + "{0:0=4d}".format(self.currentIndex))
+            return_id = ('quo' + str(generate_id))
+            return return_id
+        except ValueError:
+            print("Error generate currentID")
     
     def generate_nextIndex(self):
         self.currentIndex += 1
